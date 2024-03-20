@@ -7,33 +7,26 @@ app.use(express.json());
 app.post('/order_server/purchase', async(req, res) => {
   const id = req.body.id;
   const type = "info";
-try {
+  try{
   const response = await axios.get('http://localhost:4000/catalog_server/query', {
-            params: { id, type } 
-        });
-      //if book is available then update the stock and purchase
-      if(response.data.items[0].stock > 0 && response.data != null){
-        const operation = "decrement";
-        console.log(id);
-  const purchase = await axios.post('http://localhost:4000/catalog_server/update', {
-            id: id, operation: operation
-        });
-      if(purchase.data.success){
-        // push to order bookname and bookid and timestamp and remaining stock
-        order.push({ bookId:response.data.id,bookname:response.data.title, timestamp: new Date(),remainingStock:response.data.stock });
-        res.status(200).json({ message: 'Purchase successful',success:true});
-      }
-      else{
-        res.status(500).json({ error: 'Purchase Failed' });
-      }
-    }
-    else{
-      res.status(500).json({ error: 'Book not in stock' });
-    }
-}catch (error) {
-    console.error('Error forwarding request:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-}
+    params: { id, type }});
+  //if book is available then update the stock and purchase
+  if(response.data.Book[0].stock > 0){
+    const operation = "decrement";
+    const purchase = await axios.post('http://localhost:4000/catalog_server/update', {
+    id: id, operation: operation});
+    // push to order bookname and bookid and timestamp and remaining stock
+    order.push({ bookId:purchase.data.data.id,bookname:purchase.data.data.title, timestamp: new Date(),remainingStock:purchase.data.data.stock });
+    res.json({ message: 'Purchase successful',success:true,list:order});
+  }
+  else{
+    res.json({ error: 'Book not in stock',cause:"empty",success:false});
+  }  
+  }
+  catch{
+    res.json({ error: 'ID not found',cause:"not found",success:false});
+  }
+      
 }
 );
 app.listen(PORT, () => {

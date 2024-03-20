@@ -31,16 +31,19 @@ app.get('/Bazar/info/:id',async(req,res)=>{
 }
 );
 app.use('/Bazar/purchase/:id',async(req,res)=>{
-    try {
-        const id = req.params.id;
-        const response = await axios.post('http://localhost:5000/order_server/purchase', {
-            id: id
-        });
-        res.json(response.data);
+    const id = req.params.id;
+    const response = await axios.post('http://localhost:5000/order_server/purchase', {
+        id: id});
+    if(response.data.success){
+        res.status(200).json(response.data);
     }
-    catch (error) {
-        console.error('Error forwarding request:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+    else{
+        if(response.data.cause==="not found"){
+            res.status(404).json({msg:"Book not found"});
+        }
+        else{
+            res.status(404).json({msg:"Stock is empty"});
+        }
     }
 }
 );
