@@ -9,40 +9,38 @@ app.use(express.json());
 
 
 app.get('/catalog_server/query', (req, res) => {
-    
-  try {
-  res.status(200).send(data);
-  }
-  catch (error) {
-    console.error('Error forwarding request:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-
-});
-
-app.post('/catalog_server/update', (req, res) => {
-
-  console.log(req.body.matchingBooksid);
-  
-  data.forEach(book => {
-    
-    if (book.id === req.body.matchingBooksid) {
-  
-      if (book.stock > 0) {
-        
-        book.stock = book.stock - 1;
-        res.status(200).json({ message: 'Purchase successful' ,success:true,book:book});
-      } else {
-        res.status(500).json({ error: 'Book not in stock'});
-      }
+  const type = req.query.type; 
+  if(type === "info"){
+    const id = req.query.id;
+    const matchingBooks = data.filter(book => book.id === id);
+    try{
+    res.status(200).json({"items":matchingBooks});
     }
-  });
-  
-
+    catch{
+      console.error('Error info', error);
+      res.status(500).json({ error: 'Internal Server Error info' });
+    }
+  }
+  else if(type === "topic"){
+    const topic = req.query.topic;
+    const matchingBooks = data.filter(book => book.topic === topic);
+    try{
+    res.status(200).json({"items":matchingBooks});
+    }
+    catch{
+      console.error('Error Topic', error);
+      res.status(500).json({ error: 'Internal Server Error Topic' });
+    }
+  }
+});
+app.post('/catalog_server/update', (req, res) => {
+  data.forEach(book => {
+    if (book.id === req.body.id){
+      book.stock = book.stock - 1;
+      res.status(200).json({ message: 'Purchase successful' ,success:true,book:book});
+  }});
 }
 );
-
-
 app.listen(PORT, () => {
   console.log(`catalog server  is running on  port ${PORT}`);
 }   
