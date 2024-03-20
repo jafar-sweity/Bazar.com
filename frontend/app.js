@@ -16,7 +16,7 @@ app.get('/Bazar/search/:topic', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-app.use('/Bazar/info/:id',async(req,res)=>{
+app.get('/Bazar/info/:id',async(req,res)=>{
     try {
         const id = req.params.id;
         const type = "info";
