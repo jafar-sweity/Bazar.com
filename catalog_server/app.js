@@ -17,8 +17,8 @@ app.get('/catalog_server/query', (req, res) => {
     res.status(200).json({"items":matchingBooks});
     }
     catch{
-      console.error('Error info', error);
-      res.status(500).json({ error: 'Internal Server Error info' });
+      console.error('Book not found', error);
+      res.status(500).json({ error: 'Book not found' });
     }
   }
   else if(type === "topic"){
@@ -28,21 +28,21 @@ app.get('/catalog_server/query', (req, res) => {
     res.status(200).json({"items":matchingBooks});
     }
     catch{
-      console.error('Error Topic', error);
-      res.status(500).json({ error: 'Internal Server Error Topic' });
+      console.error('No books under this topic', error);
+      res.status(500).json({ error: 'No books under this topic' });
     }
   }
 });
 app.post('/catalog_server/update', (req, res) => {
+  console.log(data[req.body.id].stock);
   if(req.body.operation==="decrement"){
-  data.forEach(book => {
-    if (book.id === req.body.id){
-      book.stock = book.stock - 1;
-      res.status(200).json({ message: 'Purchase successful' ,success:true,book:book});
-  }});
+    if(data[req.body.id].stock>0){
+      data[req.body.id].stock--;
+      res.status(200).json({ message: 'Stock Decremented' ,success:true});
 }
-}
-);
+else{
+  res.status(500).json({ error: 'Stock empty' });
+}}});
 app.listen(PORT, () => {
   console.log(`catalog server  is running on  port ${PORT}`);
 }   

@@ -14,6 +14,7 @@ try {
       //if book is available then update the stock and purchase
       if(response.data.items[0].stock > 0 && response.data != null){
         const operation = "decrement";
+        console.log(id);
   const purchase = await axios.post('http://localhost:4000/catalog_server/update', {
             id: id, operation: operation
         });
@@ -31,7 +32,7 @@ try {
     }
 }catch (error) {
     console.error('Error forwarding request:', error);
-    res.status(500).json({ error: 'Internal3 Server Error' });
+    res.status(500).json({ error: 'Internal Server Error' });
 }
 }
 );
