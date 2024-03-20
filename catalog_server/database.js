@@ -5,5 +5,4 @@ const data= [
     {"id":"3","title":"Xen and the Art of Surviving Undergraduate School", "stock":"5", "cost":"30", "topic":"undergraduate school"},
     {"id":"4","title":"Cooking for the Impatient Undergrad", "stock":"5", "cost":"40", "topic":"undergraduate school"}
 ]
-
 export default data;
