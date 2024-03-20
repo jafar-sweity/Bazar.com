@@ -34,7 +34,6 @@ app.get('/catalog_server/query', (req, res) => {
   }
 });
 app.post('/catalog_server/update', (req, res) => {
-  console.log(data[req.body.id].stock);
   if(req.body.operation==="decrement"){
     if(data[req.body.id].stock>0){
       data[req.body.id].stock--;
