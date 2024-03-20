@@ -9,11 +9,16 @@ app.use(express.json());
 app.get('/Bazar/search/:topic', async (req, res) => {
     try {
         const id = req.params.topic;
-        const response = await axios.get('http://localhost:4000/catalog_server/search', {
+        const response = await axios.get('http://localhost:4000/catalog_server/query', {
             params: { id } 
         });
 
-        res.json(response.data);
+        const matchingBooks = response.data.filter(book => book.topic === id);
+
+        res.status(200).json({"items":matchingBooks});
+
+
+        
     } catch (error) {
         console.error('Error forwarding request:', error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -22,12 +27,18 @@ app.get('/Bazar/search/:topic', async (req, res) => {
 
 
 app.use('/Bazar/info/:id',async(req,res)=>{
-    try {
+   try {
         const id = req.params.id;
-        const response = await axios.get('http://localhost:4000/catalog_server/info', {
+        const response = await axios.get('http://localhost:4000/catalog_server/query', {
             params: { id } 
         });
-        res.json(response.data);
+
+        const matchingBooks = response.data.filter(book => book.id === id);
+
+        res.status(200).json({"items":matchingBooks});
+
+
+        
     } catch (error) {
         console.error('Error forwarding request:', error);
         res.status(500).json({ error: 'Internal Server Error' });

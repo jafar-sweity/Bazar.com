@@ -6,5 +6,4 @@ const data= [
     {"id":"4","name":"Cooking for the Impatient Undergrad", "stock":"5", "cost":"40", "topic":"undergraduate school"}
 ]
 
-module.exports = data;
-  
+export default data;
