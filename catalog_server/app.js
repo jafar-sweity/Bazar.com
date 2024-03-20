@@ -22,16 +22,18 @@ app.get('/catalog_server/query', (req, res) => {
 
 app.post('/catalog_server/update', (req, res) => {
 
+  console.log(req.body.matchingBooksid);
+  
   data.forEach(book => {
     
-    if (book.id === req.query.id) {
+    if (book.id === req.body.matchingBooksid) {
   
       if (book.stock > 0) {
         
         book.stock = book.stock - 1;
         res.status(200).json({ message: 'Purchase successful' ,success:true,book:book});
       } else {
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: 'Book not in stock'});
       }
     }
   });

@@ -50,7 +50,7 @@ app.use('/Bazar/purchase/:id',async(req,res)=>{
     try {
         const id = req.params.id;
         const response = await axios.post('http://localhost:5000/order_server/purchase', {
-            params: { id } 
+            id: id
         });
         res.json(response.data);
     }
