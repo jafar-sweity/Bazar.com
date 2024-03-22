@@ -9,12 +9,13 @@ app.use(express.json());
 
 
 app.get('/catalog_server/query', (req, res) => {
+
   const type = req.query.type; 
+
   if(type === "info"){
     const id = req.query.id;
     const matchingBooks = data.filter(book => book.id === id);
-
-    if(matchingBooks!=null)
+    if(matchingBooks!=null&&matchingBooks.length>0)
      res.json({"Book":matchingBooks});
     else{
       res.json({msg:"Book not Found"}); 
@@ -24,7 +25,7 @@ app.get('/catalog_server/query', (req, res) => {
     const topic = req.query.topic;
     const matchingBooks = data.filter(book => book.topic === topic);
 
-    if(matchingBooks!=null)
+    if(matchingBooks!=null && matchingBooks.length>0)
       res.json({"items":matchingBooks});
     else{
       res.json({msg:"Book not Found"}); 

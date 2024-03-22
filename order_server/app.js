@@ -8,12 +8,13 @@ app.post('/order_server/purchase', async(req, res) => {
   const id = req.body.id;
   const type = "info";
   try{
-  const response = await axios.get('http://localhost:4000/catalog_server/query', {
-    params: { id, type }});
+  const response = await axios.get('http://catalog-server:4000/catalog_server/query', {
+      params: { id, type }
+    });
   //if book is available then update the stock and purchase
   if(response.data.Book[0].stock > 0){
     const operation = "decrement";
-    const purchase = await axios.post('http://localhost:4000/catalog_server/update', {
+    const response = await axios.get('http://catalog-server:4000/catalog_server/query', {
     id: id, operation: operation});
     // push to order bookname and bookid and timestamp and remaining stock
     order.push({ bookId:purchase.data.data.id,bookname:purchase.data.data.title, timestamp: new Date(),remainingStock:purchase.data.data.stock });
