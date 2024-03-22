@@ -4,17 +4,17 @@ services:
 
 
   frontend:
-    build: ./frontend  # Build context is the current directory (./) relative to the Dockerfile
+    build: ./frontend  
     image: frontend-image
     ports:
-      - "3000:3000"  # Map container port 3000 to host port 3000
+      - "3000:3000"  
     networks:
       - bazar-network
     volumes:
       - ./frontend:/app:ro
 
   catalog-server:
-    build: ./catalog_server  # Build context is ./catalog_server relative to the Dockerfile
+    build: ./catalog_server 
     image: catalog-server-image
     ports:
       - "4000:4000" 
@@ -22,7 +22,7 @@ services:
       - bazar-network  
 
   order-server:
-    build: ./order_server  # Build context is ./order_server relative to the Dockerfile
+    build: ./order_server  
     image: order-server-image  
     ports:
       - "5000:5000"  
@@ -31,4 +31,4 @@ services:
 
 networks:
   bazar-network:  
-    external: false  # Optional: Set to true if you want to expose the network to external containers
+    external: false  # Optional flag to indicate that the network is external
