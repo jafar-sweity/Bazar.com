@@ -71,11 +71,13 @@ You can test the APIs using tools like Postman or RapidAPI. Here are the endpoin
 
 - The project is designed to run on Linux Docker containers. Ensure Docker is properly configured on your system.
 - The system uses simple text files  databases to maintain persistent data.
+## Node.js, Express.js, and Axios Usage
+-   The backend services in this project are built using Node.js and Express.js. Express.js is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.
 
+-   Axios is used to send HTTP requests from one server to another in this project. Axios is a promise-based HTTP client for the browser and Node.js, which allows you to make asynchronous HTTP requests to REST endpoints.
 ## Contributors
 
 - [jafar fuad sweity]
 - [mohammad bdair]
 
 
-Happy coding! 📚✨
